@@ -1,0 +1,44 @@
+{{/*
+  If there is a next item within sibling items, that is the next item.
+  If there is no next item of the current item in the siblings, we need to seek the next item of a parent item. 
+  If a parent is also the last item within siblings, we need to seek within the upper hierarchy, recursively,
+  until we find the item that is not the last item within siblings.
+  If we met the home, we have to stop the seek.
+*/}}
+
+{{- $currentPage := . -}}
+
+{{- $Result := slice -}}
+
+{{- if eq $currentPage.Kind "home" -}}
+
+    {{- $Result = $Result | append site.Home -}}
+
+{{- else -}}
+    {{- $parentOfCurrentPage := $currentPage.Parent -}}
+    {{- $pagesOfParent := $currentPage.Parent.Pages.ByWeight -}}
+    {{- $lastValidIndex := sub ( $pagesOfParent.Len ) 1 -}}
+
+    {{- $loopCounter := 0 -}}
+    {{- $foundNextCounter := -1 -}}
+
+    {{- range $pagesOfParent -}}
+      {{- $itemToCheck := . -}}
+      {{- if eq $itemToCheck $currentPage -}}
+        {{- if not ( eq $loopCounter $lastValidIndex ) -}}
+          {{- $foundNextCounter = add $loopCounter 1 -}}
+          {{ break }}
+        {{- end -}}
+      {{- end -}}
+      {{- $loopCounter = add $loopCounter 1 -}}
+    {{- end -}}
+
+    {{- if eq $foundNextCounter -1 -}}
+      {{/* It means this page is the last page within sibling pages. So, we need to go to the upper step. */}}
+      {{- $Result = $Result | append ( partial "navigation/depth_first_search/search_next_recursive_part.html" $parentOfCurrentPage ) -}}
+    {{- else -}}
+      {{- $Result = $Result | append ( index $pagesOfParent $foundNextCounter ) -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $Result -}}
