@@ -9,7 +9,7 @@
 {{- $children := $currentPage.Pages.ByWeight.Reverse -}}
 {{- $lastChild := index $children 0 -}}
 {{- if ge $lastChild.Pages.Len 1 -}}
-  {{- $Result = $Result | append ( partial "navigation/depth_first_search/search_prev_recursive_part.html" $lastChild  ) -}}
+  {{- $Result = $Result | append ( partial "navigation/depth_first_search/prev_recursive.html" $lastChild  ) -}}
 {{- else -}}
   {{- $Result = $Result | append $lastChild -}}
 {{- end -}}

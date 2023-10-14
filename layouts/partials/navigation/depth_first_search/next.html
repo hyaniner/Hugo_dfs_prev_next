@@ -13,7 +13,7 @@
 {{- with $currentPage.Pages  -}}
   {{- $Result = $Result | append ( index $currentPage.Pages 0 ) -}}
 {{- else -}}
-  {{- $Result = $Result | append ( partial "navigation/depth_first_search/search_next_recursive_part.html" $currentPage  ) -}}
+  {{- $Result = $Result | append ( partial "navigation/depth_first_search/next_recursive.html" $currentPage  ) -}}
 {{- end -}}
 
 {{- return $Result -}}

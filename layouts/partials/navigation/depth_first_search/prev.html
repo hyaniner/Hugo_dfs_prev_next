@@ -56,7 +56,7 @@
   {{- else -}}
     {{- $ResultCandidate := ( index $pagesOfParentReversed $foundNextIndex ) -}}
     {{- if ge $ResultCandidate.Pages.Len 1 -}}
-      {{- $Result = $Result | append ( partial "navigation/depth_first_search/search_prev_recursive_part.html" $ResultCandidate  ) -}}
+      {{- $Result = $Result | append ( partial "navigation/depth_first_search/prev_recursive.html" $ResultCandidate  ) -}}
     {{- else -}}
       {{- $Result = $Result | append $ResultCandidate -}}
     {{- end -}}

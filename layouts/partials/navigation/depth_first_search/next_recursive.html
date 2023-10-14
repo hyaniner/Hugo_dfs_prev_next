@@ -35,7 +35,7 @@
 
     {{- if eq $foundNextCounter -1 -}}
       {{/* It means this page is the last page within sibling pages. So, we need to go to the upper step. */}}
-      {{- $Result = $Result | append ( partial "navigation/depth_first_search/search_next_recursive_part.html" $parentOfCurrentPage ) -}}
+      {{- $Result = $Result | append ( partial "navigation/depth_first_search/next_recursive.html" $parentOfCurrentPage ) -}}
     {{- else -}}
       {{- $Result = $Result | append ( index $pagesOfParent $foundNextCounter ) -}}
     {{- end -}}
