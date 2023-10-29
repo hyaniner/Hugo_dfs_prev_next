@@ -1,19 +1,12 @@
-{{/*
-  If there are child item(s), the first child item should be the next item.
-  If there is no child item(s), we have to proceed to the recursive seeking part, to find the not-last item within siblings.
-
-  It seems that the return statement could not be in the inner template. 
-  So we have to split the recursive code part into a separate file.
-*/}}
-
 {{- $currentPage := . -}}
 
-{{- $Result := slice -}}
+{{/* fallback */}}
+{{- $Result := $currentPage.Site.Home -}}
 
-{{- with $currentPage.Pages  -}}
-  {{- $Result = $Result | append ( index $currentPage.Pages 0 ) -}}
-{{- else -}}
-  {{- $Result = $Result | append ( partial "navigation/depth_first_search/next_recursive.html" $currentPage  ) -}}
+{{- $ResultSlice := partial "navigation/depth_first_search/next_implementation.html" $currentPage -}}
+
+{{- if ge $ResultSlice.Len 1 -}}
+  {{- $Result = index $ResultSlice 0 -}}
 {{- end -}}
 
 {{- return $Result -}}
