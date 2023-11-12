@@ -8,12 +8,12 @@
 
 {{- $currentPage := . -}}
 
-{{- $Result := slice -}}
+{{- $Result := false -}}
 
 {{- with $currentPage.Pages  -}}
-  {{- $Result = $Result | append ( index $currentPage.Pages 0 ) -}}
+  {{- $Result = ( index $currentPage.Pages.ByWeight 0 ) -}}
 {{- else -}}
-  {{- $Result = $Result | append ( partial "navigation/depth_first_search/next_recursive.html" $currentPage  ) -}}
+  {{- $Result =  ( partial "navigation/section_traversal/next_recursive.html" $currentPage  ) -}}
 {{- end -}}
 
 {{- return $Result -}}

@@ -1,0 +1,29 @@
+{{/*
+  If there is a next item within sibling items, that is the next item.
+  If there is no next item of the current item in the siblings, we need to seek the next item of a parent item. 
+  If a parent is also the last item within siblings, we need to seek within the upper hierarchy, recursively,
+  until we find the item that is not the last item within siblings.
+  If we met the home, we have to stop the seek.
+*/}}
+
+{{- $currentPage := . -}}
+
+{{- $Result := false -}}
+
+{{- if eq $currentPage.Kind "home" -}}
+
+    {{- $Result = site.Home -}}
+
+{{- else -}}
+  {{- $parentOfCurrentPage := $currentPage.Parent -}}
+  {{- $pagesOfParent := $currentPage.Parent.Pages.ByWeight -}}
+  {{- $lastPageOfParent := index ( last 1 $pagesOfParent ) 0 -}}
+  {{- if eq $lastPageOfParent $currentPage -}}
+    {{/* It means this page is the last page within sibling pages. So, we need to go to the upper step. */}}
+    {{- $Result = ( partial "navigation/section_traversal/next_recursive.html" $parentOfCurrentPage ) -}}
+  {{- else -}}
+    {{- $Result = ( $pagesOfParent.Prev $currentPage ) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $Result -}}
