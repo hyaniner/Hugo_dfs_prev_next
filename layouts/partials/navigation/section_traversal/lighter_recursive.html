@@ -1,5 +1,7 @@
 {{/* 
   Seeking until there are no children, recursively.
+
+  See also: https://github.com/gohugoio/hugo/issues/1061
 */}}
 
 {{- $currentPage := . -}}
@@ -9,7 +11,7 @@
 {{- $children := $currentPage.Pages.ByWeight -}}
 {{- $lastChild := index ( last 1 $children ) 0 -}}
 {{- if ge $lastChild.Pages.Len 1 -}}
-  {{- $Result = ( partial "navigation/section_traversal/prev_recursive.html" $lastChild  ) -}}
+  {{- $Result = ( partial "navigation/section_traversal/lighter_recursive.html" $lastChild  ) -}}
 {{- else -}}
   {{- $Result = $lastChild -}}
 {{- end -}}

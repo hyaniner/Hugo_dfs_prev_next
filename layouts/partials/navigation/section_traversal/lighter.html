@@ -20,6 +20,8 @@
 
   It seems that the return statement could not be in the inner template. 
   So we have to split the recursive code part into a separate file.
+
+  See also: https://github.com/gohugoio/hugo/issues/1061
 */}}
 
 {{- $currentPage := . -}}
@@ -41,7 +43,7 @@
   {{- else -}}
     {{- $ResultCandidate := ( $pagesOfParent.Next $currentPage ) -}}
     {{- if ge $ResultCandidate.Pages.Len 1 -}}
-      {{- $Result = ( partial "navigation/section_traversal/prev_recursive.html" $ResultCandidate  ) -}}
+      {{- $Result = ( partial "navigation/section_traversal/lighter_recursive.html" $ResultCandidate  ) -}}
     {{- else -}}
       {{- $Result = $ResultCandidate -}}
     {{- end -}}
