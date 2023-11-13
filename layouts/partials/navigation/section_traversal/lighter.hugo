@@ -1,7 +1,7 @@
 {{/* 
   If the current item is the first item within sibling items, 
-  the previous item should be the parent item of the current page.
-  If not, we have to find the previous item within sibling items. 
+  the lighter item should be the parent item of the current page.
+  If not, we have to find the lighter item within sibling items. 
   But if the found item has children, we need to seek recursively until there is no more child item. 
 
   Even if the result of Kind is a section, if it has no children and at the same time has content, 
@@ -34,16 +34,16 @@
   {{- $Result = $currentPage -}}
 
 {{- else -}}
-  {{/*  find the previous page within the sibling pages.  */}}
+  {{/*  find the lighter page within the sibling pages.  */}}
   {{- $pagesOfParent := $currentPage.Parent.Pages.ByWeight -}}    
   {{- $firstPageOfParent := index ( first 1 $pagesOfParent ) 0 -}}
   {{- if eq $firstPageOfParent $currentPage -}}
-    {{/* If current page is the first page within sibling pages, the previous item is the parent of this page. */}}  
+    {{/* If current page is the first page within sibling pages, the lighter item is the parent of this page. */}}  
     {{- $Result =  $currentPage.Parent -}}
   {{- else -}}
     {{- $ResultCandidate := ( $pagesOfParent.Next $currentPage ) -}}
     {{- if ge $ResultCandidate.Pages.Len 1 -}}
-      {{- $Result = ( partial "navigation/section_traversal/lighter_recursive.html" $ResultCandidate  ) -}}
+      {{- $Result = ( partial "navigation/section_traversal/lighter_recursive.hugo" $ResultCandidate  ) -}}
     {{- else -}}
       {{- $Result = $ResultCandidate -}}
     {{- end -}}
