@@ -43,7 +43,7 @@
   {{- else -}}
     {{- $ResultCandidate := ( $pagesOfParent.Next $currentPage ) -}}
     {{- if ge $ResultCandidate.Pages.Len 1 -}}
-      {{- $Result = ( partial "navigation/section_traversal/lighter_recursive.hugo" $ResultCandidate  ) -}}
+      {{- $Result = ( partial "navigation/traversal_across_sections/lighter_recursive.hugo" $ResultCandidate  ) -}}
     {{- else -}}
       {{- $Result = $ResultCandidate -}}
     {{- end -}}

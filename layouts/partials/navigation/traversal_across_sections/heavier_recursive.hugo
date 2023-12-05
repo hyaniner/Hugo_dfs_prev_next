@@ -22,7 +22,7 @@
   {{- $lastPageOfParent := index ( last 1 $pagesOfParent ) 0 -}}
   {{- if eq $lastPageOfParent $currentPage -}}
     {{/* It means this page is the last page within sibling pages. So, we need to go to the upper step. */}}
-    {{- $Result = ( partial "navigation/section_traversal/heavier_recursive.hugo" $parentOfCurrentPage ) -}}
+    {{- $Result = ( partial "navigation/traversal_across_sections/heavier_recursive.hugo" $parentOfCurrentPage ) -}}
   {{- else -}}
     {{- $Result = ( $pagesOfParent.Prev $currentPage ) -}}
   {{- end -}}
